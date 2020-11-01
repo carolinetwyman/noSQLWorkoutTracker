@@ -12,13 +12,13 @@ module.exports = (app) => {
         db.Workout.create({}).then(data => res.json(data))
 
 
-        .catch(err => {
+            .catch(err => {
 
-            console.log("error", err);
+                console.log("error", err);
 
-            res.json(err);
+                res.json(err);
 
-          });
+            });
     });
 
     //add exercise
@@ -27,18 +27,18 @@ module.exports = (app) => {
 
         db.Workout.findByIdAndUpdate(req.params.id,
 
-            {$push: {exercises: req.body}},
-            )
+            { $push: { exercises: req.body } },
+        )
 
-        .then(data => res.json(data))
+            .then(data => res.json(data))
 
-        .catch(err => {
+            .catch(err => {
 
-            console.log("error", err);
+                console.log("error", err);
 
-            res.json(err);
+                res.json(err);
 
-          });
+            });
 
     });
 
@@ -46,18 +46,33 @@ module.exports = (app) => {
     app.get("/api/workouts/range", (req, res) => {
 
 
-        db.Workout.find({}).then(data => 
+        db.Workout.find({}).then(data =>
             res.json(data))
 
 
-        .catch(err => {
+            .catch(err => {
 
-            console.log("error", err);
+                console.log("error", err);
 
-            res.json(err);
+                res.json(err);
 
-          });
+            });
 
-    });   
+    });
+ //get recent workout
+    app.get("/api/workouts", (req, res) => {
+        db.Workout.find({}).then(data => res.json(data))
+            .catch(err => {
+                console.log("error", err);
+                res.json(err);
+            });
+
+    });
+
+    app.get("*", (req, res) => {
+
+        res.redirect("/");
+
+    });
 
 };
